@@ -1,0 +1,5 @@
+name: CoralWinter
+version: '${project.version}'
+main: it.itzcrih.coralwinter.CoralWinter
+authors: [itzCrih]
+description: CoralMC Snowball fight plugin replica
