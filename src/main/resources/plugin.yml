@@ -3,3 +3,11 @@ version: '${project.version}'
 main: it.itzcrih.coralwinter.CoralWinter
 authors: [itzCrih]
 description: CoralMC Snowball fight plugin replica
+softdepend: [ProtocolLib]
+commands:
+  santashovel:
+    description: Get your own shovel
+  CoralWinter:
+    description: Main Command
+  cwreload:
+    description: Reload configuration
