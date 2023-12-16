@@ -13,7 +13,7 @@ To install the plugin follow the steps below.
 3. Start your server and have fun!
 ## FAQ
 a. Why i don't see snow falling in the world?
-- You have to install ProtocolLib in order to see that.
-- Also, make sure you have optifine animations all enabled
+• You have to install ProtocolLib in order to see that.
+• Also, make sure you have optifine animations all enabled
 b. How come I can break all the blocks with any tool?
- - This plugin was invented to be placed in a lobby, so you need to make sure you have a core that limits block breaking. You will see that you can only break blocks of snow with a diamond shovel. 
+• This plugin was invented to be placed in a lobby, so you need to make sure you have a core that limits block breaking. You will see that you can only break blocks of snow with a diamond shovel. 
