@@ -6,6 +6,11 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class SnowUtils {
 
     public static boolean canBreakSnowBlock(Player player, Block block) {

@@ -1,3 +1,4 @@
+# This code is made by itzCrih
 name: CoralWinter
 version: '${project.version}'
 main: it.itzcrih.coralwinter.CoralWinter

@@ -12,25 +12,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class SantaShovelCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("santashovel")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (player.hasPermission("coralwinter.command.santashovel")) {
-                    giveSantaShovel(player);
-                } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
-                }
-                return true;
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (player.hasPermission("coralwinter.command.santashovel")) {
+                giveSantaShovel(player);
             } else {
-                sender.sendMessage("This command can be executed only as a player");
-                return true;
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
             }
+        } else {
+            sender.sendMessage("This command can be executed only as a player");
         }
-        return false;
+        return true;
     }
 
     private void giveSantaShovel(Player player) {

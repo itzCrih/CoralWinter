@@ -9,6 +9,7 @@ import it.itzcrih.coralwinter.commands.CoralWinterCommand;
 import it.itzcrih.coralwinter.commands.SantaShovelCommand;
 import it.itzcrih.coralwinter.commands.cwReloadCommand;
 import it.itzcrih.coralwinter.config.ConfigLoader;
+import it.itzcrih.coralwinter.listeners.BlockProtectionListener;
 import it.itzcrih.coralwinter.listeners.SnowBreakListener;
 import it.itzcrih.coralwinter.listeners.SnowballDamageListener;
 import org.bukkit.Bukkit;
@@ -18,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -42,7 +42,8 @@ public final class CoralWinter extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             protocolManager = ProtocolLibrary.getProtocolManager();
-            getServer().getConsoleSender().sendMessage("ProtocolLib detected!");
+            getLogger().info(ChatColor.GREEN + "[!] ProtocolLib detected!");
+            getServer().getConsoleSender().sendMessage("Snow particles will work since you installed ProtocolLib on your server!");
 
             new BukkitRunnable() {
                 @Override
@@ -51,8 +52,8 @@ public final class CoralWinter extends JavaPlugin {
                 }
             }.runTaskTimer(this, 0, 20);
         } else {
-            getLogger().severe("ProtocolLib non trovato!");
-            getServer().getConsoleSender().sendMessage("Se desideri far funzionare le particelle di neve devi installarlo.");
+            getLogger().warning("[!] ProtocolLib not found!");
+            getServer().getConsoleSender().sendMessage("If you want to make snow particles work you need to install it.");
         }
 
         getLogger().info("------------------------------");
@@ -66,6 +67,7 @@ public final class CoralWinter extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new SnowBreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new SnowballDamageListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockProtectionListener(), this);
 
         getLogger().info(ChatColor.GREEN + "CoralWinter has been enabled successfully!");
     }
@@ -98,6 +100,7 @@ public final class CoralWinter extends JavaPlugin {
             for (int i = 0; i < 25; i++) {
                 Bukkit.getServer().broadcastMessage(ChatColor.RED + "Why are you changing the");
                 Bukkit.getServer().broadcastMessage(ChatColor.RED + "plugin.yml? ( ͡° ͜ʖ ͡°)╭∩╮");
+                Bukkit.getServer().broadcastMessage(ChatColor.RED + "weirdo");
             }
             Bukkit.getPluginManager().disablePlugin(this);
         }
