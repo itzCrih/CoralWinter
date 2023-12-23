@@ -4,13 +4,16 @@ import it.itzcrih.coralwinter.CoralWinter;
 import it.itzcrih.coralwinter.utils.SnowUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
+
+/**
+ * This code is made by
+ * @author itzCrih
+ */
 
 public class SnowBreakListener implements Listener {
 

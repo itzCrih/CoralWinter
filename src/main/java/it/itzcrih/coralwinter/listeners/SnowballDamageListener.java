@@ -6,6 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class SnowballDamageListener implements Listener {
 
     @EventHandler

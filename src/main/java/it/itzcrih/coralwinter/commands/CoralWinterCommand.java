@@ -7,25 +7,27 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class CoralWinterCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("coralwinter")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (player.hasPermission("coralwinter.command.help")) {
-                    sendHelpMessages(player);
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Running " + ChatColor.AQUA + "CoralWinter " + ChatColor.GRAY + "v" + CoralWinter.getInstance().getDescription().getVersion() + " by itzCrih");
-                }
-                return true;
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (player.hasPermission("coralwinter.command.help")) {
+                sendHelpMessages(player);
             } else {
-                sender.sendMessage("This command can be executed only as a player");
-                return true;
+                player.sendMessage(ChatColor.GRAY + "Running " + ChatColor.AQUA + "CoralWinter " + ChatColor.GRAY + "v" + CoralWinter.getInstance().getDescription().getVersion() + " by itzCrih");
+                player.sendMessage(ChatColor.AQUA + "" + ChatColor.UNDERLINE + "https://polymart.org/resource/coralwinter.5194");
             }
+        } else {
+            sender.sendMessage("This command can be executed only as a player");
         }
-        return false;
+        return true;
     }
 
     private void sendHelpMessages(Player player) {

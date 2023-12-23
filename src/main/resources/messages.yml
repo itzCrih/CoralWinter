@@ -1,3 +1,6 @@
+# CoralWinter by itzCrih
+# Language personalization
+
 errors:
   config_loading: "There was an error while loading the config!"
   no_perm: "&cSorry, but you don't have permission to use this command."

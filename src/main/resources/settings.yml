@@ -1,5 +1,17 @@
+# CoralWinter by itzCrih
+# https://github.com/itzCrih/CoralWinter
+# Configuration
+
+# Diamond shovel settings
 santashovel:
   display-name: "&c&lPala natalizia"
   lore:
-    - "&7Feryzz sarà sicuramente contento"
+    - "&7Feryzz sara' sicuramente contento"
     - "&7se dai una ripulita a questa lobby!"
+
+# Block protection settings
+block_protection:
+  # If enabled you can only break and place blocks if you have permission
+  # coralwinter.bypass.blockprotection
+  block_place_enabled: true
+  block_break_enabled: true
