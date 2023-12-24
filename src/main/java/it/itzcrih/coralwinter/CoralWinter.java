@@ -10,6 +10,7 @@ import it.itzcrih.coralwinter.commands.SantaShovelCommand;
 import it.itzcrih.coralwinter.commands.cwReloadCommand;
 import it.itzcrih.coralwinter.config.ConfigLoader;
 import it.itzcrih.coralwinter.listeners.BlockProtectionListener;
+import it.itzcrih.coralwinter.listeners.PlayerListener;
 import it.itzcrih.coralwinter.listeners.SnowBreakListener;
 import it.itzcrih.coralwinter.listeners.SnowballDamageListener;
 import org.bukkit.Bukkit;
@@ -68,6 +69,7 @@ public final class CoralWinter extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SnowBreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new SnowballDamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new BlockProtectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
         getLogger().info(ChatColor.GREEN + "CoralWinter has been enabled successfully!");
     }

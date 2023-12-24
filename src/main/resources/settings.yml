@@ -4,6 +4,7 @@
 
 # Diamond shovel settings
 santashovel:
+  give_on_join: true
   display-name: "&c&lPala natalizia"
   lore:
     - "&7Feryzz sara' sicuramente contento"
