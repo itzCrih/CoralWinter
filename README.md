@@ -32,6 +32,8 @@ To install the plugin follow the steps below.
 2. Put the jar into your plugins' folder.
 3. Start your server and have fun!
 ## Todo
-- Automatically get the shovel when you join the server
-- Boolean to enable / disable shovel on join in config
 - Advent Calendar (GUI)
+- Custom Santa Shovel item configurable in settings
+
+Suggest me something to add to this plugin! [Contact me](https://t.me/itz_Crih)
+***
