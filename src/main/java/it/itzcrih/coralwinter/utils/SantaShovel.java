@@ -9,6 +9,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class SantaShovel {
     
     public void giveSantaShovel(Player player) {
@@ -19,7 +24,15 @@ public class SantaShovel {
     }
 
     public ItemStack createSantaShovel() {
-        ItemStack santaShovel = new ItemStack(Material.DIAMOND_SPADE, 1);
+        String spadeTypeName = CoralWinter.getConfigLoader().getConfig().getString("santashovel.type");
+        Material spadeType = Material.getMaterial(spadeTypeName);
+
+        if (spadeType == null) {
+            CoralWinter.getInstance().getLogger().severe("The material inserted in the configuration is incorrect!");
+            spadeType = Material.DIAMOND_SPADE;
+        }
+
+        ItemStack santaShovel = new ItemStack(spadeType, 1);
         ItemMeta meta = santaShovel.getItemMeta();
 
         String displayName = CoralWinter.getConfigLoader().getConfig().getString("santashovel.display-name");
@@ -33,6 +46,7 @@ public class SantaShovel {
         santaShovel.setItemMeta(meta);
         return santaShovel;
     }
+
 
     public String colorize(String message) {
         return message.replace("&", "§");
