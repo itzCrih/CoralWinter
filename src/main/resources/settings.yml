@@ -4,7 +4,7 @@
 
 # Diamond shovel settings
 santashovel:
-  type: DIAMOND_SPADE # Insert a valid material
+  type: DIAMOND_SPADE # Please insert a valid material (STONE_SPADE, GOLD_SPADE, DIAMOND_SPADE, WOOD_SPADE, IRON_SPADE)
   give_on_join: true
   display-name: "&c&lPala natalizia"
   lore:

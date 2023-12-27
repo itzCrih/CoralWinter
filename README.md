@@ -6,10 +6,11 @@ Credits to Ytnoos and [CoralMC](https://www.coralmc.it/) (I am not part of the C
 Links: [Polymart](https://polymart.org/resource/coralwinter.5194), [Contact me](https://t.me/itz_Crih)
 ## Features
 - Snowfall (only working if ProtocolLib is installed)
+- Shovel item customizable in configuration.
 - Break the snow blocks with a diamond shovel and get a snowball
 - Broken snow blocks will respawn after a few seconds. 
 - PvP only enabled if you have a snowball in your hand
-- Santashovel command will give you a diamond shovel with custom display name and lore.
+- Santashovel command will give you a custom shovel with custom display name and lore.
 - Break & place blocks protection included! (you can disable it on the config tho)
 ## Terms of services
 You will only have to comply with these terms if you use the code or fork the repo.
@@ -33,7 +34,6 @@ To install the plugin follow the steps below.
 3. Start your server and have fun!
 ## Todo
 - Advent Calendar (GUI)
-- Custom Santa Shovel item configurable in settings
 
 Suggest me something to add to this plugin! [Contact me](https://t.me/itz_Crih)
 ***

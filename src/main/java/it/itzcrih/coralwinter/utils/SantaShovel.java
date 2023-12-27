@@ -28,7 +28,8 @@ public class SantaShovel {
         Material spadeType = Material.getMaterial(spadeTypeName);
 
         if (spadeType == null) {
-            CoralWinter.getInstance().getLogger().severe("The material inserted in the configuration is incorrect!");
+            CoralWinter.getInstance().getLogger().severe("[!] Invalid material");
+            CoralWinter.getInstance().getServer().getConsoleSender().sendMessage("Since the material type inserted in the configuration is incorrect, we replaced that with a diamond shovel!");
             spadeType = Material.DIAMOND_SPADE;
         }
 
