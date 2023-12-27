@@ -10,5 +10,9 @@ commands:
     description: Get your own shovel
   CoralWinter:
     description: Main Command
+    aliases:
+      - cw
+      - winter
+      - snow
   cwreload:
-    description: Reload configuration
+    description: Reload configurations

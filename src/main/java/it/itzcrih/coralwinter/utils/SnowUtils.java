@@ -1,5 +1,6 @@
 package it.itzcrih.coralwinter.utils;
 
+import it.itzcrih.coralwinter.CoralWinter;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -14,8 +15,11 @@ import org.bukkit.inventory.ItemStack;
 public class SnowUtils {
 
     public static boolean canBreakSnowBlock(Player player, Block block) {
+        String spadeTypeName = CoralWinter.getConfigLoader().getConfig().getString("santashovel.type");
+        Material spadeType = Material.getMaterial(spadeTypeName);
         Material heldItem = player.getInventory().getItemInHand().getType();
-        if (heldItem == Material.DIAMOND_SPADE) {
+
+        if (heldItem == spadeType) {
             return block.getType() == Material.SNOW_BLOCK || block.getType() == Material.SNOW;
         }
         return false;

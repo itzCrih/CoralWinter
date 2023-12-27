@@ -7,6 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * This code is made by
+ * @author itzCrih
+ */
+
 public class PlayerListener implements Listener {
     SantaShovel santaShovel = new SantaShovel();
     private final boolean giveShovelOnJoin = CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.give_on_join");
