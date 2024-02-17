@@ -4,16 +4,22 @@
 
 # Diamond shovel settings
 santashovel:
+  # Please select an item for santashovel. (default: DIAMOND_SPADE)
   type: DIAMOND_SPADE # Please insert a valid material (STONE_SPADE, GOLD_SPADE, DIAMOND_SPADE, WOOD_SPADE, IRON_SPADE)
+  # Should we give santashovel whenever a player joins?
   give_on_join: true
-  display-name: "&c&lPala natalizia"
+  # Should we enable santashovel command?
+  enable_command: true
+  display-name: "&c&lChristmas shovel"
   lore:
-    - "&7Feryzz sara' sicuramente contento"
-    - "&7se dai una ripulita a questa lobby!"
+    - "&7Damn, the whole lobby is full of snow."
+    - "&7I would definitely be happy if you clean it!"
+    - "&7 "
+    - "&7(Hold &bLeft-click &7to clean the snow)"
 
 # Block protection settings
 block_protection:
-  # If enabled you can only break and place blocks if you have permission
+  # If enabled you can only break and place blocks if you have the following permission:
   # coralwinter.bypass.blockprotection
   block_place_enabled: true
   block_break_enabled: true
