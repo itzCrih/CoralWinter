@@ -20,6 +20,9 @@ public class SantaShovelCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            if (!CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.enable_command")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.command_disabled")));
+            }
             if (player.hasPermission("coralwinter.command.santashovel")) {
                 santaShovel.giveSantaShovel(player);
             } else {
