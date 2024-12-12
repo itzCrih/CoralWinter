@@ -1,7 +1,13 @@
-# CoralWinter by itzCrih
+#   _________                     .__  __      __.__        __
+#   \_   ___ \  ________________  |  |/  \    /  \__| _____/  |_  ___________
+#   /    \  \/ /  _ \_  __ \__  \ |  |\   \/\/   /  |/    \   __\/ __ \_  __ \
+#   \     \___(  <_> )  | \// __ \|  |_\        /|  |   |  \  | \  ___/|  | \/
+#    \______  /\____/|__|  (____  /____/\__/\  / |__|___|  /__|  \___  >__|
+#           \/                  \/           \/          \/          \/
+# CoralWinter v1.5-SNAPSHOT by itzCrih
 # https://github.com/itzCrih/CoralWinter
-# Configuration
 
+# Configuration
 # Diamond shovel settings
 santashovel:
   # Please select an item for santashovel. (default: DIAMOND_SPADE)
@@ -16,10 +22,15 @@ santashovel:
     - "&7I would definitely be happy if you clean it!"
     - "&7 "
     - "&7(Hold &bLeft-click &7to clean the snow)"
+  sound: NOTE_PIANO
 
 # Block protection settings
 block_protection:
-  # If enabled you can only break and place blocks if you have the following permission:
+  # If both enabled you will be able to break and place blocks if you have the following permission:
   # coralwinter.bypass.blockprotection
   block_place_enabled: true
   block_break_enabled: true
+
+snow_particles:
+  # Should we enable this feature?
+  enabled: false # [!] You need ProtocolLib to successfully run this feature

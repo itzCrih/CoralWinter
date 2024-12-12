@@ -31,10 +31,10 @@ public class CoralWinterCommand implements CommandExecutor {
     }
 
     private void sendHelpMessages(Player player) {
-        player.sendMessage("§b§lCORAL§f§lWINTER §7v" + CoralWinter.getInstance().getDescription().getVersion());
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b&lCoral&f&lWinter &7v" + CoralWinter.getInstance().getDescription().getVersion()));
         player.sendMessage("");
-        player.sendMessage("§3/cwreload §7- Reload all configurations");
-        player.sendMessage("§3/santashovel §7- Get your own shovel");
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/cwreload &7- Reload all configurations"));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/santashovel &7- Get your own shovel"));
         player.sendMessage("");
     }
 }
