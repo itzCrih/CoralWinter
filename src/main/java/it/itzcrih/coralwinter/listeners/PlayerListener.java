@@ -2,10 +2,18 @@ package it.itzcrih.coralwinter.listeners;
 
 import it.itzcrih.coralwinter.CoralWinter;
 import it.itzcrih.coralwinter.utils.SantaShovel;
+import it.itzcrih.coralwinter.utils.SnowUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 /**
  * This code is made by
@@ -14,24 +22,82 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerListener implements Listener {
     SantaShovel santaShovel = new SantaShovel();
-    private final boolean giveShovelOnJoin = CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.give_on_join");
 
     @EventHandler
     public void onPlayerJoin (PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (giveShovelOnJoin) {
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.give_on_join")) {
             santaShovel.giveSantaShovel(player);
         }
 
         // Questo codice mi invia un messaggio quando usate il plugin. Mi dispiacerebbe se lo togliessi!
-        if (player.getName().equals("itz_Crih") || player.getName().equals("FrChillato")) {
-            player.sendMessage((""));
-            player.sendMessage(("§7Questo server sta usando §bCoralWinter§7!"));
+        if (player.getName().equals("itz_Crih") || player.getName().equals("TeoChillato")) {
             player.sendMessage("");
-            player.sendMessage("§3" + CoralWinter.getInstance().getDescription().getName() + "§7§o v" + CoralWinter.getInstance().getDescription().getVersion());
-            player.sendMessage("§7Autore: §3" + CoralWinter.getInstance().getDescription().getAuthors());
-            player.sendMessage((""));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Questo server sta usando §bCoralWinter§7!"));
+            player.sendMessage("");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3" + CoralWinter.getInstance().getDescription().getName() + "&7&o v" + CoralWinter.getInstance().getDescription().getVersion()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Autore: &3" + CoralWinter.getInstance().getDescription().getAuthors()));
+            player.sendMessage("");
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("block_protection.block_place_enabled")) return;
+
+        Player player = event.getPlayer();
+        if (!player.hasPermission("coralwinter.bypass.blockprotection")) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("block_protection.block_break_enabled")) return;
+
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
+        if (!player.hasPermission("coralwinter.bypass.blockprotection")) {
+            event.setCancelled(true);
+        }
+
+        if (SnowUtils.canBreakSnowBlock(player, block)) {
+            SnowUtils.giveSnowball(player);
+            block.setType(Material.AIR);
+            event.setCancelled(true);
+
+            Bukkit.getScheduler().runTaskLater(CoralWinter.getInstance(), () -> {
+                if (block.getType() == Material.AIR) {
+                    block.setType(Material.SNOW);
+                }
+            }, 7 * 20);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Snowball) {
+            Player damaged = (Player) event.getEntity();
+            Snowball snowball = (Snowball) event.getDamager();
+
+            if (snowball.getShooter() instanceof Player) {
+                Player damager = (Player) snowball.getShooter();
+
+                if (!(damaged.getInventory().getItemInHand().getType() == Material.SNOW_BALL ||
+                        damaged.getInventory().getItemInHand().getType() == Material.DIAMOND_SPADE)) {
+                    event.setCancelled(true);
+                } else {
+                    Vector knockback = damager.getLocation().getDirection().multiply(1.5).setY(4.0);
+                    damaged.setVelocity(knockback);
+                    damaged.getWorld().playSound(damaged.getLocation(), Sound.DIG_SNOW, 1.0f, 2.0f);
+                    damaged.getWorld().playSound(damaged.getLocation(), Sound.ARROW_HIT, 1.0f, 1.3f);
+                    damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.SNOW_SHOVEL, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
+                    damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.FLAME, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
+                }
+            }
+        } else if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+            event.setCancelled(true);
         }
     }
 }
