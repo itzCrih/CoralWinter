@@ -1,7 +1,6 @@
 package it.itzcrih.coralwinter.utils;
 
 import it.itzcrih.coralwinter.CoralWinter;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +19,6 @@ public class SantaShovel {
         ItemStack santaShovel = createSantaShovel();
 
         player.getInventory().addItem(santaShovel);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.shovel_received")));
     }
 
     public ItemStack createSantaShovel() {

@@ -1,4 +1,4 @@
-# This code is made by itzCrih
+# This code has been made by itzCrih
 name: CoralWinter
 version: '${project.version}'
 main: it.itzcrih.coralwinter.CoralWinter
@@ -6,13 +6,7 @@ authors: [itzCrih]
 description: CoralMC Snowball fight plugin replica
 softdepend: [ProtocolLib]
 commands:
-  santashovel:
-    description: Get your own shovel
-  CoralWinter:
-    description: Main Command
-    aliases:
-      - cw
-      - winter
-      - snow
-  cwreload:
-    description: Reload configurations
+  coralwinter:
+    description: Main command for CoralWinter plugin.
+    usage: /coralwinter [reload|santashovel]
+    aliases: [cw]
