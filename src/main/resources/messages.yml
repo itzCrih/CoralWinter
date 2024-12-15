@@ -1,11 +1,17 @@
-# CoralWinter by itzCrih
-# Language personalization
+#   _________                     .__  __      __.__        __
+#   \_   ___ \  ________________  |  |/  \    /  \__| _____/  |_  ___________
+#   /    \  \/ /  _ \_  __ \__  \ |  |\   \/\/   /  |/    \   __\/ __ \_  __ \
+#   \     \___(  <_> )  | \// __ \|  |_\        /|  |   |  \  | \  ___/|  | \/
+#    \______  /\____/|__|  (____  /____/\__/\  / |__|___|  /__|  \___  >__|
+#           \/                  \/           \/          \/          \/
+# CoralWinter v1.5-SNAPSHOT by itzCrih
 
+# Language personalization
 errors:
   config_loading: "There was an error while loading the config!"
   no_perm: "&cSorry, but you don't have permission to use this command."
   command_disabled: "&cThis command has been disabled from the configuration!"
 
 commands:
-  reloaded_successfully: "&7The configuration has been &3reloaded &7successfully!"
-  shovel_received: "&7You got a &3Santa shovel&7!"
+  reloaded_successfully: "&7The &bconfigurations &7has been &breloaded &7successfully!"
+  shovel_received: "&7You have received the &bSanta Shovel&7!"

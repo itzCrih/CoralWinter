@@ -33,4 +33,4 @@ block_protection:
 
 snow_particles:
   # Should we enable this feature?
-  enabled: false # [!] You need ProtocolLib to successfully run this feature
+  enabled: true # [!] You need ProtocolLib to successfully run this feature
