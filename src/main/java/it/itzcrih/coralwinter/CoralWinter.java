@@ -38,8 +38,8 @@ public final class CoralWinter extends JavaPlugin {
         initConfig();
         checkPluginYML();
 
-        if (config.getConfig().getBoolean("snow_particles.enabled")) {
-            getLogger().info("Snow particles are enabled in the configuration, searching ProtocolLib...");
+        if (config.getConfig().getBoolean("snow_fall.enabled")) {
+            getLogger().info("Snowfall is enabled in the configuration, searching ProtocolLib...");
             if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
                 protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -54,7 +54,7 @@ public final class CoralWinter extends JavaPlugin {
                 }.runTaskTimer(this, 0, 20);
             } else {
                 getLogger().warning("[!] ProtocolLib not found!");
-                getServer().getConsoleSender().sendMessage(ChatColor.RED + "If you want snow particles to work you need to install it.");
+                getServer().getConsoleSender().sendMessage(ChatColor.RED + "If you want snowfall to work you need to install it.");
             }
         }
 

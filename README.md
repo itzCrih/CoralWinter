@@ -29,7 +29,8 @@ If you simply use the compiled version (i.e. the release on GitHub/Polymart) you
 - /coralwinter - `coralwinter.command.help` - Main command;
 - /coralwinter santashovel - `coralwinter.command.santashovel` - Get your own shovel;
 - /coralwinter reload - `coralwinter.command.reload` - Reloads configurations;
-- `coralwinter.bypass.blockprotection` - Bypass block place & break protection if enabled
+- /coralwinter snow <player> - `coralwinter.command.snow` - Generates snow particles near the selected player.
+- `coralwinter.bypass.blockprotection` - Bypass block place & break protection if enabled.
 ## Install
 To install the plugin follow the steps below.
 1. Download `CoralWinter.jar` from [repository's release](https://github.com/itzCrih/CoralWinter/releases);

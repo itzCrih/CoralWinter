@@ -11,7 +11,11 @@ errors:
   config_loading: "There was an error while loading the config!"
   no_perm: "&cSorry, but you don't have permission to use this command."
   command_disabled: "&cThis command has been disabled from the configuration!"
+  player_not_found: "&cPlayer '%target%' not found!"
 
 commands:
   reloaded_successfully: "&7The &bconfigurations &7has been &breloaded &7successfully!"
   shovel_received: "&7You have received the &bSanta Shovel&7!"
+  cooldown: "&cYou must wait %time_remaining% seconds before using this command again."
+  snow_start: "&7Magical snow starts falling around &b%target%&7!"
+  snow_end: "&7The magical snow has stopped."
