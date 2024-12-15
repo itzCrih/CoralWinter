@@ -31,6 +31,14 @@ block_protection:
   block_place_enabled: true
   block_break_enabled: true
 
-snow_particles:
+# Snow command settings
+snow_command:
+  # How many seconds should the particles stay near the player
+  seconds: 10 # seconds
+  # How many seconds should the cooldown of the command be
+  cooldown: 30 # seconds
+
+# Snowfall settings
+snow_fall:
   # Should we enable this feature?
   enabled: true # [!] You need ProtocolLib to successfully run this feature

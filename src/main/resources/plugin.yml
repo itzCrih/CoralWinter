@@ -8,5 +8,18 @@ softdepend: [ProtocolLib]
 commands:
   coralwinter:
     description: Main command for CoralWinter plugin.
-    usage: /coralwinter [reload|santashovel]
+    usage: /coralwinter [reload|santashovel|snow]
     aliases: [cw]
+permissions:
+  coralwinter.command.help:
+    description: Allows the player to get the help message
+    default: op
+  coralwinter.command.santashovel:
+    description: Allows the player to use the santashovel command
+    default: op
+  coralwinter.command.reload:
+    description: Allows the player to reload configurations
+    default: op
+  coralwinter.command.snow:
+    description: Allows the player to use the snowfall command.
+    default: op
