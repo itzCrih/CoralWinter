@@ -32,6 +32,11 @@ santashovel:
   right_click_ability_enabled: true
   # What sound should we play whenever you break snow with your shovel?
   sound_when_breaking: NOTE_PIANO
+  # Whenever you get hit by a snowball knockback values
+  snowball_knockback:
+    enabled: true
+    horizontal: 1.3
+    vertical: 3.3
 
 # Block protection settings
 block_protection:

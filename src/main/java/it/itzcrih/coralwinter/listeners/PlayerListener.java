@@ -98,12 +98,20 @@ public class PlayerListener implements Listener {
                         damaged.getInventory().getItemInHand().getType() == Material.DIAMOND_SPADE)) {
                     event.setCancelled(true);
                 } else {
-                    Vector knockback = damager.getLocation().getDirection().multiply(1.5).setY(4.0);
-                    damaged.setVelocity(knockback);
-                    damaged.getWorld().playSound(damaged.getLocation(), Sound.DIG_SNOW, 1.0f, 2.0f);
-                    damaged.getWorld().playSound(damaged.getLocation(), Sound.ARROW_HIT, 1.0f, 1.3f);
+                    damager.getWorld().playSound(damager.getLocation(), Sound.DIG_SNOW, 1.0f, 2.0f);
+                    damager.getWorld().playSound(damager.getLocation(), Sound.ARROW_HIT, 1.0f, 1.3f);
+
+                    damaged.getWorld().playSound(damaged.getLocation(), Sound.STEP_SNOW, 1.0f, 1.3f);
                     damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.SNOW_SHOVEL, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
                     damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.FLAME, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
+
+                    if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.snowball_knockback.enabled")) {
+                        double knockbackMultiplier = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.horizontal");
+                        double verticalBoost = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.vertical");
+
+                        Vector knockback = damager.getLocation().getDirection().multiply(knockbackMultiplier).setY(verticalBoost);
+                        damaged.setVelocity(knockback);
+                    }
                 }
             }
         } else if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
