@@ -28,7 +28,7 @@ public class SnowUtils {
 
     public static void giveSnowball(Player player) {
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.0f, 1.0f);
-        player.playSound(player.getLocation(), Sound.valueOf(CoralWinter.getConfigLoader().getConfig().getString("santashovel.sound")), 1.0f, 2.0f);
+        player.playSound(player.getLocation(), Sound.valueOf(CoralWinter.getConfigLoader().getConfig().getString("santashovel.sound_when_breaking")), 1.0f, 2.0f);
         player.getWorld().spigot().playEffect(player.getLocation(), Effect.SNOWBALL_BREAK, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
         player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
     }

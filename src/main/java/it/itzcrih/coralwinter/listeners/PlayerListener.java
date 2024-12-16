@@ -8,11 +8,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 /**
@@ -98,6 +102,26 @@ public class PlayerListener implements Listener {
             }
         } else if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onItemHeld(PlayerItemHeldEvent event) {
+        Player player = event.getPlayer();
+        ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
+
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.when_holding_enable_effects")) {
+            if (newItem != null && newItem.hasItemMeta() && newItem.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&' ,CoralWinter.getConfigLoader().getConfig().getString("santashovel.display-name")))) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false));
+                player.setAllowFlight(true);
+                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+            } else {
+                player.removePotionEffect(PotionEffectType.SPEED);
+                if (player.getGameMode() != GameMode.CREATIVE) {
+                    player.setAllowFlight(false);
+                    player.setFlying(false);
+                }
+            }
         }
     }
 }

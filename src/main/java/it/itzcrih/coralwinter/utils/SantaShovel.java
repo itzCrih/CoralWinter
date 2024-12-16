@@ -1,10 +1,12 @@
 package it.itzcrih.coralwinter.utils;
 
 import it.itzcrih.coralwinter.CoralWinter;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
 
@@ -17,7 +19,6 @@ public class SantaShovel {
     
     public void giveSantaShovel(Player player) {
         ItemStack santaShovel = createSantaShovel();
-
         player.getInventory().addItem(santaShovel);
     }
 
@@ -42,13 +43,18 @@ public class SantaShovel {
             meta.setLore(colorize(lore));
         }
 
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.enable_glow")) {
+            meta.addEnchant(Enchantment.DURABILITY, 3, true);
+        }
+
+        meta.spigot().setUnbreakable(true);
         santaShovel.setItemMeta(meta);
         return santaShovel;
     }
 
 
     public String colorize(String message) {
-        return message.replace("&", "§");
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public List<String> colorize(List<String> messages) {
