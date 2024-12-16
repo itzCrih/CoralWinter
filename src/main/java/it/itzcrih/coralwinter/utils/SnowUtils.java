@@ -32,4 +32,6 @@ public class SnowUtils {
         player.getWorld().spigot().playEffect(player.getLocation(), Effect.SNOWBALL_BREAK, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
         player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
     }
+
+    // todo: Add 24/12 (xmas) event
 }
