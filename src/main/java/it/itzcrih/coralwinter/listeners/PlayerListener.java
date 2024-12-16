@@ -4,10 +4,12 @@ import it.itzcrih.coralwinter.CoralWinter;
 import it.itzcrih.coralwinter.utils.SantaShovel;
 import it.itzcrih.coralwinter.utils.SnowUtils;
 import org.bukkit.*;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -17,7 +19,11 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * This code is made by
@@ -120,6 +126,57 @@ public class PlayerListener implements Listener {
                 if (player.getGameMode() != GameMode.CREATIVE) {
                     player.setAllowFlight(false);
                     player.setFlying(false);
+                }
+            }
+        }
+    }
+
+    private final HashMap<UUID, Long> cooldowns = new HashMap<>();
+
+    @EventHandler
+    public void onRightClick(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack item = player.getInventory().getItemInHand();
+
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.right_click_ability_enabled")) {
+            if (item != null && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getConfig().getString("santashovel.display-name")))) {
+                if (event.getAction().toString().contains("RIGHT_CLICK")) {
+                    UUID uuid = player.getUniqueId();
+                    long currentTime = System.currentTimeMillis();
+                    if (cooldowns.containsKey(uuid) && currentTime < cooldowns.get(uuid)) {
+                        long timeLeft = (cooldowns.get(uuid) - currentTime) / 1000;
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cWait " + timeLeft + " seconds before using this ability again!"));
+                        return;
+                    }
+
+                    cooldowns.put(uuid, currentTime + 50000);
+
+                    Arrow arrow = player.launchProjectile(Arrow.class);
+                    arrow.setVelocity(player.getLocation().getDirection().multiply(2));
+                    player.playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            Location arrowLocation = arrow.getLocation();
+
+                            arrowLocation.getWorld().playEffect(arrowLocation, Effect.EXPLOSION_HUGE, 1);
+                            arrowLocation.getWorld().playSound(arrowLocation, Sound.EXPLODE, 2, 1);
+
+                            double radius = 5.0;
+                            for (Player nearbyPlayer : Bukkit.getOnlinePlayers()) {
+                                if (!nearbyPlayer.equals(player) && nearbyPlayer.getLocation().distance(arrowLocation) <= radius) {
+                                    Vector direction = nearbyPlayer.getLocation().toVector().subtract(arrowLocation.toVector()).normalize();
+
+                                    double knockbackMultiplier = 3.0;
+                                    double verticalBoost = 1.5;
+                                    Vector knockback = direction.multiply(knockbackMultiplier).setY(verticalBoost);
+
+                                    nearbyPlayer.setVelocity(knockback);
+                                }
+                            }
+                        }
+                    }.runTaskLater(CoralWinter.getInstance(), 30L);
                 }
             }
         }
