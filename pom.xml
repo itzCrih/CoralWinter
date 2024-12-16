@@ -6,7 +6,7 @@
 
     <groupId>it.itzcrih</groupId>
     <artifactId>CoralWinter</artifactId>
-    <version>1.7-SNAPSHOT-DEV</version>
+    <version>1.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>CoralWinter</name>
