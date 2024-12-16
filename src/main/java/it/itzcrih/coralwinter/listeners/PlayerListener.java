@@ -109,7 +109,9 @@ public class PlayerListener implements Listener {
                         double knockbackMultiplier = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.horizontal");
                         double verticalBoost = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.vertical");
 
-                        Vector knockback = damager.getLocation().getDirection().multiply(knockbackMultiplier).setY(verticalBoost);
+                        Vector knockback = damager.getLocation().getDirection().multiply(knockbackMultiplier);
+                        knockback.setY(knockback.getY() + verticalBoost);
+
                         damaged.setVelocity(knockback);
                     }
                 }
