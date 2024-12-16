@@ -16,13 +16,20 @@ santashovel:
   give_on_join: true
   # Should we enable santashovel command?
   enable_command: true
+  # Display name of the shovel
   display-name: "&c&lChristmas shovel"
+  # Description of the shovel
   lore:
     - "&7Damn, the whole lobby is full of snow."
     - "&7I would definitely be happy if you clean it!"
     - "&7 "
     - "&7(Hold &bLeft-click &7to clean the snow)"
-  sound: NOTE_PIANO
+  # Should we enchant the shovel for a glow effect?
+  enable_glow: true
+  # Should we give Speed III and ability to fly when you hold your shovel?
+  when_holding_enable_effects: true
+  # What sound should we play whenever you break snow with your shovel?
+  sound_when_breaking: NOTE_PIANO
 
 # Block protection settings
 block_protection:
