@@ -28,6 +28,8 @@ santashovel:
   enable_glow: true
   # Should we give Speed III and ability to fly when you hold your shovel?
   when_holding_enable_effects: true
+  # Should we enable this ability? (when you right-click the shovel it will shoot an arrow which will let near players go fly!)
+  right_click_ability_enabled: true
   # What sound should we play whenever you break snow with your shovel?
   sound_when_breaking: NOTE_PIANO
 
