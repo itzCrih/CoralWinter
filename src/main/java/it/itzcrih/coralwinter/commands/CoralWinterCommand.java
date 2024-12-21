@@ -3,9 +3,7 @@ package it.itzcrih.coralwinter.commands;
 import it.itzcrih.coralwinter.CoralWinter;
 import it.itzcrih.coralwinter.config.ConfigLoader;
 import it.itzcrih.coralwinter.utils.SantaShovel;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,6 +55,10 @@ public class CoralWinterCommand implements CommandExecutor {
                 handleSnowfallCommand(player, args);
                 break;
 
+            case "addsnow":
+                handleAddSnowCommand(player);
+                break;
+
             default:
                 player.sendMessage(ChatColor.RED + "Unknown command. Use /coralwinter for help.");
                 break;
@@ -92,6 +94,39 @@ public class CoralWinterCommand implements CommandExecutor {
 
         santaShovel.giveSantaShovel(player);
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.shovel_received")));
+    }
+
+    private void handleAddSnowCommand(Player player) {
+        if (!player.hasPermission("coralwinter.command.addsnow")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
+            return;
+        }
+
+        World world = player.getWorld();
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.adding_snow")));
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int radius = 50;
+
+                for (int x = -radius; x <= radius; x++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        int worldX = player.getLocation().getBlockX() + x;
+                        int worldZ = player.getLocation().getBlockZ() + z;
+                        int worldY = world.getHighestBlockYAt(worldX, worldZ);
+
+                        Material blockAbove = world.getBlockAt(worldX, worldY, worldZ).getType();
+                        Material blockBelow = world.getBlockAt(worldX, worldY - 1, worldZ).getType();
+
+                        if (blockAbove == Material.AIR && blockBelow.isSolid() && blockBelow != Material.LEAVES) {
+                            Bukkit.getScheduler().runTask(CoralWinter.getInstance(), () -> world.getBlockAt(worldX, worldY, worldZ).setType(Material.SNOW));
+                        }
+                    }
+                }
+                Bukkit.getScheduler().runTask(CoralWinter.getInstance(), () -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.successfully_added_snow"))));
+            }
+        }.runTaskAsynchronously(CoralWinter.getInstance());
     }
 
     private final Map<UUID, Long> snowfallCooldowns = new HashMap<>();
@@ -167,6 +202,7 @@ public class CoralWinterCommand implements CommandExecutor {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter reload &7- Reload all configurations"));
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter santashovel &7- Get your own shovel"));
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter snow <player> &7- Generate snow particles near a player"));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter addsnow &7- Add snow in the lobby"));
         player.sendMessage("");
     }
 }
