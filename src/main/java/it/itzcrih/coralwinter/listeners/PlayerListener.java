@@ -105,9 +105,9 @@ public class PlayerListener implements Listener {
                     damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.SNOW_SHOVEL, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
                     damaged.getWorld().spigot().playEffect(damaged.getLocation(), Effect.FLAME, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
 
-                    if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.snowball_knockback.enabled")) {
-                        double knockbackMultiplier = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.horizontal");
-                        double verticalBoost = CoralWinter.getConfigLoader().getConfig().getDouble("santashovel.snowball_knockback.vertical");
+                    if (CoralWinter.getConfigLoader().getConfig().getBoolean("snowball.snowball_knockback.enabled")) {
+                        double knockbackMultiplier = CoralWinter.getConfigLoader().getConfig().getDouble("snowball.snowball_knockback.horizontal");
+                        double verticalBoost = CoralWinter.getConfigLoader().getConfig().getDouble("snowball.snowball_knockback.vertical");
 
                         Vector knockback = damager.getLocation().getDirection().multiply(knockbackMultiplier);
                         knockback.setY(knockback.getY() + verticalBoost);
@@ -127,7 +127,7 @@ public class PlayerListener implements Listener {
         ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
 
         if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.when_holding_enable_effects")) {
-            if (newItem != null && newItem.hasItemMeta() && newItem.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&' ,CoralWinter.getConfigLoader().getConfig().getString("santashovel.display-name")))) {
+            if (newItem != null && newItem.hasItemMeta() && newItem.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&' ,CoralWinter.getConfigLoader().getConfig().getString("santashovel.display_name")))) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false));
                 player.setAllowFlight(true);
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
@@ -149,7 +149,7 @@ public class PlayerListener implements Listener {
         ItemStack item = player.getInventory().getItemInHand();
 
         if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.right_click_ability_enabled")) {
-            if (item != null && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getConfig().getString("santashovel.display-name")))) {
+            if (item != null && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getConfig().getString("santashovel.display_name")))) {
                 if (event.getAction().toString().contains("RIGHT_CLICK")) {
                     UUID uuid = player.getUniqueId();
                     long currentTime = System.currentTimeMillis();

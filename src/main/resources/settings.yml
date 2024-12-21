@@ -17,13 +17,14 @@ santashovel:
   # Should we enable santashovel command?
   enable_command: true
   # Display name of the shovel
-  display-name: "&c&lChristmas shovel"
+  display_name: "&c&lChristmas shovel"
   # Description of the shovel
   lore:
     - "&7Damn, the whole lobby is full of snow."
     - "&7I would definitely be happy if you clean it!"
     - "&7 "
     - "&7(Hold &bLeft-click &7to clean the snow)"
+    - "&7(Click &bRight-click &7to use special ability)"
   # Should we enchant the shovel for a glow effect?
   enable_glow: true
   # Should we give Speed III and ability to fly when you hold your shovel?
@@ -32,6 +33,19 @@ santashovel:
   right_click_ability_enabled: true
   # What sound should we play whenever you break snow with your shovel?
   sound_when_breaking: NOTE_PIANO
+
+# Snowball settings
+snowball:
+  # Display name of the snowball
+  display_name: "&3&lSnowball"
+  # Description of the snowball
+  lore:
+    - "&7This is Santa's best weapon."
+    - "&7Use it &cwisely&7! ;)"
+    - ""
+    - "&7(Click &bRight-click &7to throw it)"
+  # Should we enchant the snowball for a glow effect?
+  enable_glow: true
   # Whenever you get hit by a snowball knockback values
   snowball_knockback:
     enabled: true

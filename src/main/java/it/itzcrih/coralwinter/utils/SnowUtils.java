@@ -5,8 +5,12 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 /**
  * This code is made by
@@ -28,9 +32,28 @@ public class SnowUtils {
 
     public static void giveSnowball(Player player) {
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.0f, 1.0f);
-        player.playSound(player.getLocation(), Sound.valueOf(CoralWinter.getConfigLoader().getConfig().getString("santashovel.sound_when_breaking")), 1.0f, 2.0f);
+        player.playSound(player.getLocation(),
+                Sound.valueOf(CoralWinter.getConfigLoader().getConfig().getString("santashovel.sound_when_breaking")),
+                1.0f, 2.0f);
         player.getWorld().spigot().playEffect(player.getLocation(), Effect.SNOWBALL_BREAK, 26, 0, 0.2F, 0.5F, 0.2F, 0.2F, 12, 387);
-        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+
+        ItemStack snowball = new ItemStack(Material.SNOW_BALL, 1);
+        ItemMeta meta = snowball.getItemMeta();
+        if (meta != null) {
+            String displayName = CoralWinter.getConfigLoader().getConfig().getString("snowball.display_name");
+            List<String> lore = CoralWinter.getConfigLoader().getConfig().getStringList("snowball.lore");
+
+            meta.setDisplayName(displayName != null ? ChatUtils.colorize(displayName) : "Snowball");
+            if (lore != null && !lore.isEmpty()) {
+                meta.setLore(ChatUtils.colorize(lore));
+            }
+            if (CoralWinter.getConfigLoader().getConfig().getBoolean("snowball.enable_glow")) {
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            }
+        }
+
+        snowball.setItemMeta(meta);
+        player.getInventory().addItem(snowball);
     }
 
     // todo: Add 24/12 (xmas) event

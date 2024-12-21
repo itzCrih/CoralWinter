@@ -19,3 +19,5 @@ commands:
   cooldown: "&cYou must wait %time_remaining% seconds before using this command again."
   snow_start: "&7Magical snow starts falling around &b%target%&7!"
   snow_end: "&7The magical snow has stopped."
+  adding_snow: "&7Adding snow in progress... may take a while."
+  successfully_added_snow: "&7Snow has been added &bsuccessfully&7!"
