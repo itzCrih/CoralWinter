@@ -46,6 +46,10 @@ snowball:
     - "&7(Click &bRight-click &7to throw it)"
   # Should we enchant the snowball for a glow effect?
   enable_glow: true
+  # Should we enable limit for snowballs in player's inventory?
+  enable_limit: true
+  # How many snowballs should the player have as maximum amount?
+  max_limit: 16
   # Whenever you get hit by a snowball knockback values
   snowball_knockback:
     enabled: true
