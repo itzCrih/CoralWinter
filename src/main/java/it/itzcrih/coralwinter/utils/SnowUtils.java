@@ -31,6 +31,21 @@ public class SnowUtils {
     }
 
     public static void giveSnowball(Player player) {
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("snowball.enable_limit")) {
+            int totalSnowballs = 0;
+            for (ItemStack item : player.getInventory().getContents()) {
+                if (item != null && item.getType() == Material.SNOW_BALL) {
+                    totalSnowballs += item.getAmount();
+                }
+            }
+
+            double maxLimit = CoralWinter.getConfigLoader().getConfig().getDouble("snowball.max_limit");
+            if (totalSnowballs >= maxLimit) {
+                player.sendMessage(ChatUtils.colorize(CoralWinter.getConfigLoader().getMessages().getString("errors.maximum_amount")));
+                return;
+            }
+        }
+
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.0f, 1.0f);
         player.playSound(player.getLocation(),
                 Sound.valueOf(CoralWinter.getConfigLoader().getConfig().getString("santashovel.sound_when_breaking")),

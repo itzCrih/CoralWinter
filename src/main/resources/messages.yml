@@ -12,6 +12,7 @@ errors:
   no_perm: "&cSorry, but you don't have permission to use this command."
   command_disabled: "&cThis command has been disabled from the configuration!"
   player_not_found: "&cPlayer '%target%' not found!"
+  maximum_amount: "&cYou have reached the maximum amount of snowballs!"
 
 commands:
   reloaded_successfully: "&7The &bconfigurations &7has been &breloaded &7successfully!"
