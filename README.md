@@ -4,7 +4,7 @@ Credits to Ytnoos and [CoralMC](https://www.coralmc.it/) for the idea and for in
 Made this for fun, coding is one of my hobby and I don't do it for commercial purposes.
 Depends on [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) (only if you want to have extra features, otherwise the plugin will still work)
 
-Links: [Polymart](https://polymart.org/resource/coralwinter.5194), [Contact me](https://t.me/itz_Crih)
+Links: [SpigotMC](https://www.spigotmc.org/resources/coralwinter.121306/), [Polymart](https://polymart.org/resource/coralwinter.5194), [Contact me](https://t.me/itz_Crih)
 ## What will this do?
 Assuming that you already have a snowy lobby, this plugin will let player break just the snow (it will get replaced some seconds later), which will give the player a snowball. Throwing the snowball at a player will hit them and apply knock back only if both players have the shovel or snowballs in their hands.
 ## Extra features
@@ -17,7 +17,7 @@ Assuming that you already have a snowy lobby, this plugin will let player break 
 - Break & place blocks protection included! (you can disable it on the config).
 ## Terms of services
 You will only have to comply with these terms if you use the code or fork the repo.
-If you simply use the compiled version (i.e. the release on GitHub/Polymart) you won't have to worry!
+If you simply use the compiled version (i.e. the release on GitHub/SpigotMC/Polymart) you don't have to worry!
 - You can only use this for private and personal use, not commercial use.
 - You cannot claim that this code was created by you.
 - You cannot remove the comments and the credits from the code.
@@ -30,7 +30,8 @@ If you simply use the compiled version (i.e. the release on GitHub/Polymart) you
 - /coralwinter santashovel - `coralwinter.command.santashovel` - Get your own shovel;
 - /coralwinter reload - `coralwinter.command.reload` - Reloads configurations;
 - /coralwinter snow <player> - `coralwinter.command.snow` - Generates snow particles near the selected player.
-- `coralwinter.bypass.blockprotection` - Bypass block place & break protection if enabled.
+- /coralwinter addsnow - `coralwinter.command.addsnow` - Generates snow blocks in the lobby
+- /coralwinter version - `coralwinter.command.version` - Debug information (Dev-only)
 ## Install
 To install the plugin follow the steps below.
 1. Download `CoralWinter.jar` from [repository's release](https://github.com/itzCrih/CoralWinter/releases);

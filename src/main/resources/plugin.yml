@@ -1,18 +1,19 @@
 # This code has been made by itzCrih
+# https://github.com/itzCrih/CoralWinter
 name: CoralWinter
 version: '${project.version}'
 main: it.itzcrih.coralwinter.CoralWinter
 authors: [itzCrih]
-description: CoralMC Snowball fight plugin replica
+description: CoralMC Snowball fight replica
 softdepend: [ProtocolLib]
 commands:
   coralwinter:
-    description: Main command for CoralWinter plugin.
-    usage: /coralwinter [reload|santashovel|snow]
-    aliases: [cw]
+    description: CoralWinter main command
+    usage: /coralwinter <sub-command>
+    aliases: [ cw ]
 permissions:
   coralwinter.command.help:
-    description: Allows the player to get the help message
+    description: Allows the player to get the only-admin help message
     default: op
   coralwinter.command.santashovel:
     description: Allows the player to use the santashovel command
@@ -22,4 +23,8 @@ permissions:
     default: op
   coralwinter.command.snow:
     description: Allows the player to use the snowfall command.
+    default: op
+  coralwinter.command.addsnow:
+    default: op
+  coralwinter.command.version:
     default: op

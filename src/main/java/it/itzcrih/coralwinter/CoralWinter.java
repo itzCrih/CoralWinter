@@ -6,6 +6,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import it.itzcrih.coralwinter.commands.CoralWinterCommand;
+import it.itzcrih.coralwinter.commands.CoralWinterTab;
 import it.itzcrih.coralwinter.config.ConfigLoader;
 import it.itzcrih.coralwinter.listeners.PlayerListener;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Random;
 
 /**
- * CoralWinter
+ * <a href="https://github.com/itzCrih/CoralWinter">CoralWinter</a>
  * <p>
  * A CoralMC Snowball fight plugin replica
  * made with love by
@@ -66,10 +67,11 @@ public final class CoralWinter extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "        \\/                  \\/           \\/          \\/          \\/       ");
 
         getCommand("coralwinter").setExecutor(new CoralWinterCommand());
+        getCommand("coralwinter").setTabCompleter(new CoralWinterTab());
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
-        getLogger().info(ChatColor.GREEN + "[OK] CoralWinter has been enabled successfully!");
+        getLogger().info(ChatColor.GREEN + "[OK] CoralWinter v" + getDescription().getVersion() + " has been enabled successfully!");
     }
 
     @Override

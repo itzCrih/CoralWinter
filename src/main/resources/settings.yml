@@ -4,7 +4,7 @@
 #   \     \___(  <_> )  | \// __ \|  |_\        /|  |   |  \  | \  ___/|  | \/
 #    \______  /\____/|__|  (____  /____/\__/\  / |__|___|  /__|  \___  >__|
 #           \/                  \/           \/          \/          \/
-# CoralWinter v1.5-SNAPSHOT by itzCrih
+# CoralWinter v1.9-SNAPSHOT by itzCrih
 # https://github.com/itzCrih/CoralWinter
 
 # Configuration
@@ -33,6 +33,8 @@ santashovel:
   right_click_ability_enabled: true
   # What sound should we play whenever you break snow with your shovel?
   sound_when_breaking: NOTE_PIANO
+  disable_drop: true
+  disable_pickup: true
 
 # Snowball settings
 snowball:
@@ -57,11 +59,13 @@ snowball:
     vertical: 3.3
 
 # Block protection settings
-block_protection:
-  # If both enabled you will be able to break and place blocks if you have the following permission:
-  # coralwinter.bypass.blockprotection
-  block_place_enabled: true
-  block_break_enabled: true
+world_protection:
+  # If both enabled you will NOT be able to break and place blocks, except if you're in Creative Mode.
+  disable_block_breaking: true
+  disable_block_placement: true
+  # If enabled, players will not be able to drop or pickup items, except if you're in Creative Mode.
+  disable_player_drop: true
+  disable_player_pickup: true
 
 # Snow command settings
 snow_command:

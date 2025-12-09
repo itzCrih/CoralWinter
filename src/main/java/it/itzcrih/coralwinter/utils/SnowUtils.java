@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
+ * <a href="https://github.com/itzCrih/CoralWinter">CoralWinter</a>
  * This code is made by
  * @author itzCrih
  */
@@ -70,6 +71,4 @@ public class SnowUtils {
         snowball.setItemMeta(meta);
         player.getInventory().addItem(snowball);
     }
-
-    // todo: Add 24/12 (xmas) event
 }

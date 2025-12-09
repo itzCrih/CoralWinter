@@ -1,6 +1,7 @@
 package it.itzcrih.coralwinter.listeners;
 
 import it.itzcrih.coralwinter.CoralWinter;
+import it.itzcrih.coralwinter.utils.ChatUtils;
 import it.itzcrih.coralwinter.utils.SantaShovel;
 import it.itzcrih.coralwinter.utils.SnowUtils;
 import org.bukkit.*;
@@ -9,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -26,12 +27,56 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
+ * <a href="https://github.com/itzCrih/CoralWinter">CoralWinter</a>
  * This code is made by
  * @author itzCrih
  */
 
 public class PlayerListener implements Listener {
     SantaShovel santaShovel = new SantaShovel();
+
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent event) {
+        if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("world_protection.disable_player_drop")) {
+            event.setCancelled(true);
+        }
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.disable_drop") &&
+                santaShovel.isSantaShovel(event.getItemDrop().getItemStack())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPickup(PlayerPickupItemEvent event) {
+        if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("world_protection.disable_player_pickup")) {
+            event.setCancelled(true);
+        }
+        if (CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.disable_pickup") &&
+        santaShovel.isSantaShovel(event.getItem().getItemStack())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) return;
+        if (event.getCurrentItem() != null &&
+                santaShovel.isSantaShovel(event.getCurrentItem())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        if (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) return;
+        ItemStack item = event.getOldCursor();
+        if (santaShovel.isSantaShovel(item)) {
+            event.setCancelled(true);
+        }
+    }
+
 
     @EventHandler
     public void onPlayerJoin (PlayerJoinEvent event) {
@@ -41,37 +86,34 @@ public class PlayerListener implements Listener {
             santaShovel.giveSantaShovel(player);
         }
 
-        // Questo codice mi invia un messaggio quando usate il plugin. Mi dispiacerebbe se lo togliessi!
+        // Questo codice invierà solo a me un messaggio in chat per informarmi che state usando il mio plugin. Per favore non rimuoverlo.
         if (player.getName().equals("itz_Crih") || player.getName().equals("TeoChillato")) {
-            player.sendMessage("");
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Questo server sta usando §bCoralWinter§7!"));
-            player.sendMessage("");
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3" + CoralWinter.getInstance().getDescription().getName() + "&7&o v" + CoralWinter.getInstance().getDescription().getVersion()));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Autore: &3" + CoralWinter.getInstance().getDescription().getAuthors()));
-            player.sendMessage("");
+            player.sendMessage(ChatUtils.colorize(
+                    "&b&l====[ CoralWinter Notice ]====\n" +
+                            "&7Questo server sta usando &bCoralWinter&7!\n" +
+                            "\n" +
+                            "&3" + CoralWinter.getInstance().getDescription().getName() +
+                            " &7&o v" + CoralWinter.getInstance().getDescription().getVersion() + "\n" +
+                            "&7Autore: &3" + CoralWinter.getInstance().getDescription().getAuthors() + "\n" +
+                            "&b&l==============================="
+            ));
         }
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("block_protection.block_place_enabled")) return;
+        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("world_protection.disable_block_placement")) return;
 
         Player player = event.getPlayer();
-        if (!player.hasPermission("coralwinter.bypass.blockprotection")) {
+        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("block_protection.block_break_enabled")) return;
-
         Player player = event.getPlayer();
         Block block = event.getBlock();
-        if (!player.hasPermission("coralwinter.bypass.blockprotection")) {
-            event.setCancelled(true);
-        }
-
         if (SnowUtils.canBreakSnowBlock(player, block)) {
             SnowUtils.giveSnowball(player);
             block.setType(Material.AIR);
@@ -82,6 +124,11 @@ public class PlayerListener implements Listener {
                     block.setType(Material.SNOW);
                 }
             }, 7 * 20);
+        }
+
+        if (!CoralWinter.getConfigLoader().getConfig().getBoolean("world_protection.disable_block_breaking")) return;
+        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+            event.setCancelled(true);
         }
     }
 

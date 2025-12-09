@@ -2,6 +2,7 @@ package it.itzcrih.coralwinter.commands;
 
 import it.itzcrih.coralwinter.CoralWinter;
 import it.itzcrih.coralwinter.config.ConfigLoader;
+import it.itzcrih.coralwinter.utils.ChatUtils;
 import it.itzcrih.coralwinter.utils.SantaShovel;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * <a href="https://github.com/itzCrih/CoralWinter">CoralWinter</a>
  * This code is made by
  * @author itzCrih
  */
@@ -22,11 +24,12 @@ import java.util.UUID;
 public class CoralWinterCommand implements CommandExecutor {
 
     private final SantaShovel santaShovel = new SantaShovel();
+    private final Map<UUID, Long> snowfallCooldowns = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "This command can only be executed by players.");
+            sender.sendMessage(ChatUtils.colorize("&cThis command can only be executed by players"));
             return true;
         }
 
@@ -36,8 +39,9 @@ public class CoralWinterCommand implements CommandExecutor {
             if (player.hasPermission("coralwinter.command.help")) {
                 sendHelpMessages(player);
             } else {
-                player.sendMessage(ChatColor.GRAY + "Running " + ChatColor.AQUA + "CoralWinter " + ChatColor.GRAY + "v" + CoralWinter.getInstance().getDescription().getVersion() + " by itzCrih");
-                player.sendMessage(ChatColor.AQUA + "" + ChatColor.UNDERLINE + "https://polymart.org/resource/coralwinter.5194 https://github.com/itzCrih/CoralWinter");
+                player.sendMessage(ChatUtils.colorize("&7Running &bCoralWinter &7v"
+                        + CoralWinter.getInstance().getDescription().getVersion() + " &7developed by &bitzCrih&7."));
+                player.sendMessage(ChatUtils.colorize("&n&b https://github.com/itzCrih/CoralWinter"));
             }
             return true;
         }
@@ -59,17 +63,38 @@ public class CoralWinterCommand implements CommandExecutor {
                 handleAddSnowCommand(player);
                 break;
 
+            case "version":
+                handleVersionCommand(player);
+                break;
+
             default:
-                player.sendMessage(ChatColor.RED + "Unknown command. Use /coralwinter for help.");
+                player.sendMessage(ChatUtils.colorize("&cUnknown subcommand."));
                 break;
         }
 
         return true;
     }
 
+    private void handleVersionCommand(Player player) {
+        if (!player.hasPermission("coralwinter.command.version")) {
+            player.sendMessage(ChatUtils.colorize("&cYou have no permission to view sensitive info."));
+            return;
+        }
+
+        player.sendMessage(ChatUtils.colorize(
+                "&b&l=== CoralWinter Diagnostics ===\n" +
+                        "&7Plugin version: &f" + CoralWinter.getInstance().getDescription().getVersion() + "\n" +
+                        "&7Server version: &f" + Bukkit.getVersion() + "\n" +
+                        "&7Online players: &f" + Bukkit.getOnlinePlayers().size() + "\n" +
+                        "&7Config status: &f" + (CoralWinter.getConfigLoader() != null ? "Loaded" : "ERROR") + "\n" +
+                        "&7Snowfall cooldown tracked: &f" + snowfallCooldowns.size()
+        ));
+    }
+
     private void handleReloadCommand(Player player) {
         if (!player.hasPermission("coralwinter.command.reload")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
+            player.sendMessage(ChatUtils.colorize(
+                    CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
             return;
         }
 
@@ -78,32 +103,38 @@ public class CoralWinterCommand implements CommandExecutor {
         config.reloadMessages();
 
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.0f);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.reloaded_successfully")));
+        player.sendMessage(ChatUtils.colorize(
+                CoralWinter.getConfigLoader().getMessages().getString("commands.reloaded_successfully")));
     }
 
     private void handleSantaShovelCommand(Player player) {
         if (!CoralWinter.getConfigLoader().getConfig().getBoolean("santashovel.enable_command")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.command_disabled")));
+            player.sendMessage(ChatUtils.colorize(
+                    CoralWinter.getConfigLoader().getMessages().getString("errors.command_disabled")));
             return;
         }
 
         if (!player.hasPermission("coralwinter.command.santashovel")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
+            player.sendMessage(ChatUtils.colorize(
+                    CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
             return;
         }
 
         santaShovel.giveSantaShovel(player);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.shovel_received")));
+        player.sendMessage(ChatUtils.colorize(
+                CoralWinter.getConfigLoader().getMessages().getString("commands.shovel_received")));
     }
 
     private void handleAddSnowCommand(Player player) {
         if (!player.hasPermission("coralwinter.command.addsnow")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
+            player.sendMessage(ChatUtils.colorize(
+                    CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
             return;
         }
 
         World world = player.getWorld();
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.adding_snow")));
+        player.sendMessage(ChatUtils.colorize(
+                CoralWinter.getConfigLoader().getMessages().getString("commands.adding_snow")));
 
         new BukkitRunnable() {
             @Override
@@ -120,31 +151,35 @@ public class CoralWinterCommand implements CommandExecutor {
                         Material blockBelow = world.getBlockAt(worldX, worldY - 1, worldZ).getType();
 
                         if (blockAbove == Material.AIR && blockBelow.isSolid() && blockBelow != Material.LEAVES) {
-                            Bukkit.getScheduler().runTask(CoralWinter.getInstance(), () -> world.getBlockAt(worldX, worldY, worldZ).setType(Material.SNOW));
+                            Bukkit.getScheduler().runTask(CoralWinter.getInstance(),
+                                    () -> world.getBlockAt(worldX, worldY, worldZ).setType(Material.SNOW));
                         }
                     }
                 }
-                Bukkit.getScheduler().runTask(CoralWinter.getInstance(), () -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.successfully_added_snow"))));
+                Bukkit.getScheduler().runTask(CoralWinter.getInstance(), () ->
+                        player.sendMessage(ChatUtils.colorize(
+                                CoralWinter.getConfigLoader().getMessages().getString("commands.successfully_added_snow")))
+                );
             }
         }.runTaskAsynchronously(CoralWinter.getInstance());
     }
-
-    private final Map<UUID, Long> snowfallCooldowns = new HashMap<>();
 
     private void handleSnowfallCommand(Player player, String[] args) {
         Player targetPlayer = player;
 
         if (args.length > 1) {
             targetPlayer = player.getServer().getPlayer(args[1]);
-
             if (targetPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.player_not_found").replace("%target%", args[1])));
+                player.sendMessage(ChatUtils.colorize(
+                        CoralWinter.getConfigLoader().getMessages().getString("errors.player_not_found")
+                                .replace("%target%", args[1])));
                 return;
             }
         }
 
         if (!player.hasPermission("coralwinter.command.snow")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm"))));
+            player.sendMessage(ChatUtils.colorize(
+                    CoralWinter.getConfigLoader().getMessages().getString("errors.no_perm")));
             return;
         }
 
@@ -152,16 +187,20 @@ public class CoralWinterCommand implements CommandExecutor {
         if (snowfallCooldowns.containsKey(playerUUID)) {
             long timeLeft = (snowfallCooldowns.get(playerUUID) - System.currentTimeMillis()) / 1000;
             if (timeLeft > 0) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.cooldown")
-                        .replaceAll("%time_remaining%", String.valueOf(timeLeft))));
+                player.sendMessage(ChatUtils.colorize(
+                        CoralWinter.getConfigLoader().getMessages().getString("commands.cooldown")
+                                .replace("%time_remaining%", String.valueOf(timeLeft))));
                 return;
             }
         }
 
-        snowfallCooldowns.put(playerUUID, System.currentTimeMillis() + CoralWinter.getConfigLoader().getConfig().getInt("snow_command.cooldown") * 1000L);
+        snowfallCooldowns.put(playerUUID, System.currentTimeMillis()
+                + CoralWinter.getConfigLoader().getConfig().getInt("snow_command.cooldown") * 1000L);
 
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.snow_start")
-                .replace("%target%", targetPlayer.getName())));
+        player.sendMessage(ChatUtils.colorize(
+                CoralWinter.getConfigLoader().getMessages().getString("commands.snow_start")
+                        .replace("%target%", targetPlayer.getName())));
+
         startSnowfallEffect(targetPlayer);
     }
 
@@ -174,22 +213,15 @@ public class CoralWinterCommand implements CommandExecutor {
             @Override
             public void run() {
                 if (timeLeft <= 0) {
-                    targetPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CoralWinter.getConfigLoader().getMessages().getString("commands.snow_end")
-                            .replace("%target%", targetPlayer.getName())));
+                    targetPlayer.sendMessage(ChatUtils.colorize(
+                            CoralWinter.getConfigLoader().getMessages().getString("commands.snow_end")
+                                    .replace("%target%", targetPlayer.getName())));
                     cancel();
                     return;
                 }
 
                 targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 1, 0), Effect.SNOW_SHOVEL, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 1, 0), Effect.SNOW_SHOVEL, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 2, 1), Effect.SNOW_SHOVEL, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(1, 2, 0), Effect.SNOW_SHOVEL, 0);
                 targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 1, 0), Effect.SNOWBALL_BREAK, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 1, 0), Effect.SNOWBALL_BREAK, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(0, 2, 1), Effect.SNOWBALL_BREAK, 0);
-                targetPlayer.getWorld().playEffect(targetPlayer.getLocation().add(1, 2, 0), Effect.SNOWBALL_BREAK, 0);
-
-                targetPlayer.playSound(targetPlayer.getLocation(), Sound.NOTE_PLING, 1.0f, 1.2f);
 
                 timeLeft -= 10;
             }
@@ -197,12 +229,14 @@ public class CoralWinterCommand implements CommandExecutor {
     }
 
     private void sendHelpMessages(Player player) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b&lCoral&f&lWinter &7v" + CoralWinter.getInstance().getDescription().getVersion()));
-        player.sendMessage("");
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter reload &7- Reload all configurations"));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter santashovel &7- Get your own shovel"));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter snow <player> &7- Generate snow particles near a player"));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3/coralwinter addsnow &7- Add snow in the lobby"));
-        player.sendMessage("");
+        player.sendMessage(ChatUtils.colorize(
+                "&b&l====[ Coral&f&lWinter &7v" + CoralWinter.getInstance().getDescription().getVersion() + " ]====\n" +
+                        "&3/coralwinter reload &7- Reload configs\n" +
+                        "&3/coralwinter santashovel &7- Get shovel\n" +
+                        "&3/coralwinter snow <player> &7- Snow particles\n" +
+                        "&3/coralwinter addsnow &7- Add snow in the lobby\n" +
+                        "&3/coralwinter version &7- Plugin diagnostics\n" +
+                        "&b&l==============================="
+        ));
     }
 }
